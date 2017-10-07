@@ -10,7 +10,7 @@ int main() {
   scanf("%d", &command);
   
   int size;
-  for (size = 0; getchar() != '\n'; ++size) {
+  for (size = 0; getchar() != '\n' && size != 100; ++size) {
     scanf("%d", &a[size]);
   }
 
