@@ -7,7 +7,7 @@
 int main() {
   int a[100];
   int command;
-  scanf("%d", &command);
+  scanf("%d ", &command);
   
   int size;
   for (size = 0; getchar() != '\n' && size != 100; ++size) {
