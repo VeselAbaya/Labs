@@ -1,0 +1,18 @@
+button {
+  width: auto;
+  background: white;
+  color: black;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+form {
+  display: inline-block;
+}
+
+span {
+  color: darkred;
+}
