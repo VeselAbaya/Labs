@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define GOLDSEC 1.62
+#define FACTOR 1.62
 #define END "Dragon flew away!"
 #define FIRST_ALLOC_LEN 50
 
@@ -16,7 +16,7 @@ int main() {
     char* text = (char*)calloc(FIRST_ALLOC_LEN, sizeof(char));
     int text_len = FIRST_ALLOC_LEN;
     char* end = END;
-    int end_size = strlen(end);
+    int end_len = strlen(end);
 
     int sentence_begin = 0; // Индекс начала текущего предложения
     int text_index = 0;
@@ -30,7 +30,7 @@ int main() {
             text[text_index++] = c;
 
             // Проверка на конец ввода
-            if (c == end[end_size - 1] && is_end(text, end)) {
+            if (c == end[end_len - 1] && is_end(text, end)) {
                 printf("%s\n", text);
                 break;
             }
@@ -43,7 +43,7 @@ int main() {
             ++after_edit;
             ++before_edit;
 
-            if (text_index == text_len - 2) { text_len = buffer_realloc(text, text_len); } // -2 чтобы в текст вместилось с, '\n' и первый символ след. предложения
+            if (text_index == text_len - 1) { text_len = buffer_realloc(text, text_len); } // -2 чтобы в текст вместилось с, '\n' и первый символ след. предложения
             
             text[text_index++] = c;
             text[text_index++] = '\n';
@@ -53,8 +53,6 @@ int main() {
     }
 
     printf("Количество предложений до %d и Количество предложений после %d\n", before_edit, after_edit);
-
-    free(text);
 
     return 0;
 }
@@ -76,8 +74,8 @@ int is_end(char const* text, char const* end) {
 }
 
 int buffer_realloc(char* text, int text_len) {
-    text_len = text_len * GOLDSEC;
-    text = realloc(text, text_len);
-    text[(int)(text_len - 1)] = '\0';
-    return text_len;
+	text_len = text_len * FACTOR;
+	text = realloc(text, text_len);
+	text[(int)(text_len - 1)] = '\0';
+	return text_len;
 }
