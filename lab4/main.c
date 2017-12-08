@@ -71,13 +71,28 @@ void removeEl(MusicalComposition* head, char* name_for_remove) {
 
     MusicalComposition* cur = head;
 
-    do {
+    if (strcmp(head->name, name_for_remove) == 0) {
+        head->next->prev = NULL;
+        free(head);
+        return;
+    }
+
+    while (cur->next) {
         if (strcmp(cur->name, name_for_remove) == 0) { 
             cur->prev->next = cur->next;
             cur->next->prev = cur->prev;
             free(cur);
+            return;
         }
-    } while (cur = cur->next);
+
+        cur = cur->next;
+    }
+
+    if (strcmp(cur->name, name_for_remove) == 0) {
+        cur->prev->next = NULL;
+        free(cur);
+    }
+
 }
 
 int count(MusicalComposition* head) {
