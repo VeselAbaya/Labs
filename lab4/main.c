@@ -2,13 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// #define LIST(Name, Type)\
-// typedef struct Name {
-//     Type* prev;
-//     Type cur;
-//     Type* next;
-// } Name;
-
 // Описание структуры MusicalComposition
 typedef struct MusicalComposition {
     char* name;
@@ -92,7 +85,6 @@ void removeEl(MusicalComposition* head, char* name_for_remove) {
         cur->prev->next = NULL;
         free(cur);
     }
-
 }
 
 int count(MusicalComposition* head) {
@@ -114,6 +106,27 @@ void print_names(MusicalComposition* head) {
     } while (cur = cur->next);
 }
 
+// Курсовая
+void swap_halfs(MusicalComposition** head) {
+    if (head == NULL || *head == NULL) { return; }
+
+    int list_len = count(*head);
+    int half_index = list_len / 2;
+    MusicalComposition* cur = *head;
+    MusicalComposition* new_head = NULL;
+
+    for (int i = 0; i != half_index; ++i) { cur = cur->next; }
+    cur->prev->next = NULL;
+    cur->prev = NULL;
+    new_head = cur;
+
+    for (int i = half_index; i != list_len - 1; ++i) { cur = cur->next; }
+    cur->next = *head;
+    (*head)->prev = cur;
+
+    *head = new_head;
+}
+
 
 int main(){
     int length;
@@ -123,8 +136,7 @@ int main(){
     char** authors = (char**)malloc(sizeof(char*)*length);
     int* years = (int*)malloc(sizeof(int)*length);
 
-    for (int i=0;i<length;i++)
-    {
+    for (int i=0;i<length;i++) {
         char name[80];
         char author[80];
 
@@ -140,7 +152,6 @@ int main(){
 
         strcpy(names[i], name);
         strcpy(authors[i], author);
-
     }
 
     MusicalComposition* head = createMusicalCompositionList(names, authors, years, length);
@@ -164,6 +175,11 @@ int main(){
     printf("%s %s %d\n", head->name, head->author, head->year);
     int k = count(head);
 
+    // swap_halfs(&head);
+    // scanf("\n");
+    // print_names(head);
+    // scanf("\n");
+
     printf("%d\n", k);
     push(head, element_for_push);
 
@@ -171,15 +187,17 @@ int main(){
     printf("%d\n", k);
 
     removeEl(head, name_for_remove); 
+
     print_names(head);
 
     k = count(head);
     printf("%d\n", k);
 
-    for (int i=0;i<length;i++){
+    for (int i=0;i<length;i++) {
         free(names[i]);
         free(authors[i]);
     }
+
     free(names);
     free(authors);
     free(years);
