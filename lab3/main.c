@@ -31,6 +31,7 @@ int main() {
 
             // Проверка на конец ввода
             if (c == end[end_len - 1] && is_end(text, end)) {
+                text[text_index] = '\0';
                 printf("%s\n", text);
                 break;
             }
@@ -71,10 +72,9 @@ int is_end(char const* text, char const* end) {
 }
 
 int buffer_realloc(char** text, int text_len) {
-	text_len = text_len * FACTOR;
-	*text = realloc(*text, text_len);
-    (*text)[text_len - 1] = '\0';
-	return text_len;
+	char* reallocated;
+    if (reallocated = realloc(*text, text_len * FACTOR)) {    
+        *text = reallocated;
+	    return text_len * FACTOR;
+    } else { return -1; }
 }
-
-
