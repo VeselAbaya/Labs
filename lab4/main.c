@@ -106,28 +106,6 @@ void print_names(MusicalComposition* head) {
     } while (cur = cur->next);
 }
 
-// Курсовая
-void swap_halfs(MusicalComposition** head) {
-    if (head == NULL || *head == NULL) { return; }
-
-    int list_len = count(*head);
-    int half_index = list_len / 2;
-    MusicalComposition* cur = *head;
-    MusicalComposition* new_head = NULL;
-
-    for (int i = 0; i != half_index; ++i) { cur = cur->next; }
-    cur->prev->next = NULL;
-    cur->prev = NULL;
-    new_head = cur;
-
-    for (int i = half_index; i != list_len - 1; ++i) { cur = cur->next; }
-    cur->next = *head;
-    (*head)->prev = cur;
-
-    *head = new_head;
-}
-
-
 int main(){
     int length;
     scanf("%d\n", &length);  
@@ -174,11 +152,6 @@ int main(){
 
     printf("%s %s %d\n", head->name, head->author, head->year);
     int k = count(head);
-
-    // swap_halfs(&head);
-    // scanf("\n");
-    // print_names(head);
-    // scanf("\n");
 
     printf("%d\n", k);
     push(head, element_for_push);
