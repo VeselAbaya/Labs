@@ -52,7 +52,10 @@ MusicalComposition* createMusicalCompositionList(char** array_names, char** arra
 }
 
 void push(MusicalComposition* head, MusicalComposition* element) {
-    if (head == NULL) { head = element; return; } 
+    if (head == NULL) { 
+        head = element;
+        return;
+    } 
 
     MusicalComposition* cur = head;
     
@@ -60,43 +63,6 @@ void push(MusicalComposition* head, MusicalComposition* element) {
     element->prev = cur;
     cur->next = element;
     element->next = NULL;
-}
-
-void removeEl(MusicalComposition* head, char* name_for_remove) {
-    if (head == NULL) { return; }
-
-    MusicalComposition* cur = head;
-
-    if (strcmp(head->name, name_for_remove) == 0) {
-        head->next->prev = NULL;
-
-        free(head->name);
-        free(head->author);
-        free(head);
-        return;
-    }
-
-    while (cur->next) {
-        if (strcmp(cur->name, name_for_remove) == 0) { 
-            cur->prev->next = cur->next;
-            cur->next->prev = cur->prev;
-            
-            free(cur->name);
-            free(cur->author);
-            free(cur);
-            return;
-        }
-
-        cur = cur->next;
-    }
-
-    if (strcmp(cur->name, name_for_remove) == 0) {
-        cur->prev->next = NULL;
-
-        free(cur->name);
-        free(cur->author);
-        free(cur);
-    }
 }
 
 int count(MusicalComposition* head) {
