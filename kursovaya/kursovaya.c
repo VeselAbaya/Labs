@@ -17,8 +17,12 @@ typedef struct MusicalComposition {
 MusicalComposition* createMusicalComposition(char* name, char* author, int year) {
     MusicalComposition* ret = (MusicalComposition*)malloc(sizeof(MusicalComposition));
 
-    ret->name = name;
-    ret->author = author;
+    ret->name = (char*)malloc(strlen(name));
+    strcpy(ret->name, name);
+
+    ret->author = (char*)malloc(strlen(author));
+    strcpy(ret->author, author);
+
     ret->year = year;
     ret->prev = NULL;
     ret->next = NULL;
@@ -56,7 +60,6 @@ void push(MusicalComposition* head, MusicalComposition* element) {
     element->prev = cur;
     cur->next = element;
     element->next = NULL;
-
 }
 
 void removeEl(MusicalComposition* head, char* name_for_remove) {
@@ -66,6 +69,9 @@ void removeEl(MusicalComposition* head, char* name_for_remove) {
 
     if (strcmp(head->name, name_for_remove) == 0) {
         head->next->prev = NULL;
+
+        free(head->name);
+        free(head->author);
         free(head);
         return;
     }
@@ -74,6 +80,9 @@ void removeEl(MusicalComposition* head, char* name_for_remove) {
         if (strcmp(cur->name, name_for_remove) == 0) { 
             cur->prev->next = cur->next;
             cur->next->prev = cur->prev;
+            
+            free(cur->name);
+            free(cur->author);
             free(cur);
             return;
         }
@@ -83,27 +92,31 @@ void removeEl(MusicalComposition* head, char* name_for_remove) {
 
     if (strcmp(cur->name, name_for_remove) == 0) {
         cur->prev->next = NULL;
+
+        free(cur->name);
+        free(cur->author);
         free(cur);
     }
 }
 
 int count(MusicalComposition* head) {
-    if (head == NULL) { return 0; }
-    
-    MusicalComposition* cur = head;    
-    int ret = 1;
-    while (cur = cur->next) { ++ret; }
+    int ret = 0;    
+
+    while (head != NULL) { 
+        ++ret;
+        head = head->next; 
+    }
 
     return ret;
 }
 
 void print_names(MusicalComposition* head) {
-    if (head == NULL) { return ; }
-
     MusicalComposition* cur = head;
-    do {
+    
+    while (cur != NULL) {
         printf("%s\n", cur->name);
-    } while (cur = cur->next);
+        cur = cur->next;
+    }
 }
 
 // Курсовая
