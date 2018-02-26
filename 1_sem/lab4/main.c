@@ -62,7 +62,6 @@ void push(MusicalComposition* head, MusicalComposition* element) {
     element->prev = cur;
     cur->next = element;
     element->next = NULL;
-
 }
 
 void removeEl(MusicalComposition* head, char* name_for_remove) {
