@@ -86,8 +86,8 @@ int main() {
 
             FILE* result = fopen("result.txt", "w"); 
             fprintf(result, "%d\n", func(path, dirent->d_name));
-            fclose(file);
-        }
+            fclose(result);
+	}
     }
     
     closedir(dir);
