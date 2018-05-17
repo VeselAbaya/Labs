@@ -23,16 +23,18 @@ Stack stack_init() {
     return stack;
 }
 
-void push(Stack* stack, type el) {
+int push(Stack* stack, type el) {
     if (stack->size == stack->capacity) { 
         if (stack->data = realloc(stack->data, stack->capacity * FACTOR)) { 
             stack->capacity *= FACTOR;
             stack->data[stack->size++] = el;
         } else {
             fprintf(stderr, "Out of memory");
+            return 0;
         }
     } else { 
         stack->data[stack->size++] = el;
+        return 1;
     }
 }
 
@@ -50,6 +52,10 @@ int isEmpty(Stack* stack) {
 
 void shrink_to_fit(Stack* stack) {
     stack->data = realloc(stack->data, stack->size);
+}
+
+void free_stack(Stack* stack) {
+    free(stack->data);
 }
 
 int main() {
@@ -75,10 +81,12 @@ int main() {
             if (tag[0] == '/') {
                 if (isEmpty(&stack)) { 
                     printf("wrong\n");
+                    free_stack(stack);
                     return 0;
                 } else if (strcmp(pop(&stack), &tag[1]) == 0) {} 
                 else {
                     printf("wrong\n");
+                    free_stack(stack);
                     return 0;
                 }
             } else {
@@ -97,5 +105,6 @@ int main() {
     }
 
     printf("correct\n");
+    free_stack(stack);
     return 0;
 }
