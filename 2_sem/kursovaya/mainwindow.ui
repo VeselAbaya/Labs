@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1070</width>
+    <height>640</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>LULpainter</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGraphicsView" name="graphics_view">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>941</width>
+      <height>613</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGraphicsView {
+	color: rgb(75, 75, 75);
+	border: 0px;
+}
+
+QScrollBar:horizontal {
+	background: transparent;
+    height: 10px;
+}
+QScrollBar::handle:horizontal {
+    background: rgb(75, 75, 75);
+	border-radius: 5px;
+    min-width: 10px;
+}
+QScrollBar::add-line:horizontal {
+	background: transparent;
+	width: 10px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    background: transparent;
+    width: 10px;
+	subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:vertical {
+	background: transparent;
+    opacity: 1;
+    width:10px;
+}
+QScrollBar::handle:vertical {
+    background: rgb(75, 75, 75);
+	border-radius: 5px;
+    min-height: 10px;
+}
+QScrollBar::add-line:vertical {
+	background: transparent;
+    height: 10px;
+}
+
+QScrollBar::sub-line:vertical {
+    background: transparent;
+    height: 10px;
+}
+
+QAbstractScrollArea::corner {
+    background: none;
+    border: none;
+}</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustIgnored</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1070</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuImage">
+    <property name="title">
+     <string>Image</string>
+    </property>
+    <widget class="QMenu" name="menuResize">
+     <property name="title">
+      <string>Resize</string>
+     </property>
+     <addaction name="actionCrop_3"/>
+     <addaction name="actionExpanse"/>
+    </widget>
+    <addaction name="actionGraysacle"/>
+    <addaction name="actionInvert"/>
+    <addaction name="actionImage_info"/>
+    <addaction name="menuResize"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionHelp"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuImage"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="styleSheet">
+    <string notr="true">color: white;
+background-color: rgb(75, 75, 75);</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actioncoordinates_gray"/>
+   <addaction name="actioncoordinates_invert"/>
+   <addaction name="actionCrop_3"/>
+   <addaction name="actionExpanse"/>
+  </widget>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="toolTip">
+    <string comment="Create 640x480 image">New</string>
+   </property>
+   <property name="whatsThis">
+    <string>Create 640x480 image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actioncoordinates_gray">
+   <property name="text">
+    <string>coordinates...</string>
+   </property>
+   <property name="iconText">
+    <string>Grayscale</string>
+   </property>
+   <property name="toolTip">
+    <string>Choose area on image</string>
+   </property>
+  </action>
+  <action name="actioncoordinates_invert">
+   <property name="text">
+    <string>coordinates...</string>
+   </property>
+   <property name="iconText">
+    <string>Invert color</string>
+   </property>
+   <property name="toolTip">
+    <string>Choose area on image</string>
+   </property>
+  </action>
+  <action name="actionGraysacle">
+   <property name="text">
+    <string>Grayscale</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionInvert">
+   <property name="text">
+    <string>Invert color</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionCrop_3">
+   <property name="text">
+    <string>Crop</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionExpanse">
+   <property name="text">
+    <string>Expanse</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionImage_info">
+   <property name="text">
+    <string>Image info</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>graphics_view</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
