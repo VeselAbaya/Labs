@@ -208,5 +208,67 @@ void MainWindow::on_compress_button_clicked() {
         delete [] saving_raster[0];
         delete [] saving_raster;
     }
+  
+  //    std::ofstream file(QFileDialog::getSaveFileName(this).toStdString(), std::ios::out | std::ios::binary);
+
+//    if (file.is_open()) {
+//        BitMapFileHeader bm_header;
+//        BitMapInfo       bm_info;
+
+//        bm_header.bfType1     = 'B';
+//        bm_header.bfType2     = 'M';
+//        bm_header.bfSize      = sizeof(BitMapFileHeader) +
+//                                sizeof(BitMapInfo) +
+//                                palette.size() +
+//                                (image->get_width() + ALIGNMENT(image->get_width())) * image->get_height(); // whole image size (headers + raster)
+//        bm_header.bfReserved1 = bm_header.bfReserved2 = 0;
+
+//        bm_info.biSize          = BI_SIZE;
+//        bm_info.biWidth         = image->get_width();
+//        bm_info.biHeight        = image->get_height();
+//        bm_info.biPlanes        = 1;
+//        bm_info.biCompression   = 0;
+//        bm_info.biSizeImage     = (image->get_width() + ALIGNMENT(image->get_width())) * image->get_height();
+//        bm_info.biXPelsPerMeter = 0;
+//        bm_info.biYPelsPerMeter = 0;
+//        bm_header.bfOffBits     = sizeof(BitMapFileHeader) +
+//                                  sizeof(BitMapInfo) +
+//                                  palette.size();
+//        bm_info.biBitCount      = 8;
+//        bm_info.biClrUsed       = palette.size();
+//        bm_info.biClrImportant  = 0;
+
+//        file.write(reinterpret_cast<char*>(&bm_header), sizeof(BitMapFileHeader));
+//        file.write(reinterpret_cast<char*>(&bm_info), sizeof(BitMapInfo));
+//        file.write(reinterpret_cast<char*>(palette.data()), palette.size());
+
+//        // allocation memory for new image
+//        uint8_t** saving_raster = new uint8_t*[bm_info.biHeight];
+//        saving_raster[0] = new uint8_t[bm_info.biHeight * ((bm_info.biWidth) + ALIGNMENT(bm_info.biWidth))]{};
+//        for (int i = 1; i != bm_info.biHeight; ++i) {
+//            saving_raster[i] = saving_raster[i-1] + (bm_info.biWidth) + ALIGNMENT(bm_info.biWidth);
+//        }
+
+
+//        for (int x = 0; x != bm_info.biWidth; ++x) {
+//            for (int y = 0; y != bm_info.biHeight; ++y) {
+//                QColor color = image->get_color(x, y);
+//                for (int i = 0; i != palette.size()/4; ++i) {
+//                    if (palette[i*4] == color.blue() &&
+//                            palette[i*4+1] == color.green() &&
+//                            palette[i*4+2] == color.red()) {
+//                        saving_raster[bm_info.biHeight - y - 1][x] = i;
+//                    }
+//                }
+//            }
+//        }
+
+//        file.write(reinterpret_cast<char*>(saving_raster[0]),
+//                                           bm_info.biHeight * ((bm_info.biWidth) + ALIGNMENT(bm_info.biWidth)));
+//        file.close();
+
+//        delete [] saving_raster[0];
+//        delete [] saving_raster;
+//    }
 }
 
