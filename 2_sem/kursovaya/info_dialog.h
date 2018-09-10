@@ -1,12 +1,14 @@
 #ifndef INFO_DIALOG_H
 #define INFO_DIALOG_H
 
-#include <bmp.h>
+#include <memory>
 
 #include <QDialog>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+
+#include <bmp.h>
 
 /*! \class Info_dialog
  * \brief Class for implementation of dialog

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include <unistd.h>
 
 #define MAX_FILES_AMOUNT 4
 #define MAX_DIGITS_AMOUNT 4
@@ -107,7 +108,7 @@ void test_file_create(char* dir_path) {
     }
 }
 
-void test_create(char* dir_path, int deep) {
+void test_create(char* dir_path, int deep, int* flag) {
     if (deep == 0) {
         test_file_create(dir_path);
     } else {
@@ -116,7 +117,14 @@ void test_create(char* dir_path, int deep) {
         strcat(new_path, "/");
 
         int add_or_mul = rand() % 4;
-        if (add_or_mul == 0) {
+        if (*flag) {
+            if (add_or_mul % 2 == 1) {
+                strcat(new_path, "add");
+                mkdir(new_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH); } else {
+                strcat(new_path, "mul");
+                mkdir(new_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+            }
+        } else if (add_or_mul == 0) {
             strcat(new_path, "add");
             mkdir(new_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
         } else if (add_or_mul == 1) { 
@@ -128,49 +136,48 @@ void test_create(char* dir_path, int deep) {
             strcat(add_path, "add");
             mkdir(add_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
             test_file_create(add_path);
-            test_create(add_path, deep-1);
+            test_create(add_path, deep-1, flag);
 
             strcat(new_path, "mul");
             mkdir(new_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
         }
-
-        test_file_create(new_path);
-        test_create(new_path, deep-1);
+        
+        if (*flag) {
+            test_file_create(new_path);
+            *flag = 0;
+        }
+        
+        test_create(new_path, deep-1, flag);
     }
 }
 
 int main(int argc, char** argv) {
-    srand(time(NULL));
+    // srand(time(NULL));
 
-    int deep = argc == 2 ? (int)strtol(argv[1], (char **)NULL, 10) : DEFAULT_DEEP; 
+    // int deep = argc == 2 ? (int)strtol(argv[1], (char **)NULL, 10) : DEFAULT_DEEP; 
 
-    system("rm -rf ./testing");
-    mkdir("testing", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    int add_or_mul = rand() % 2;
-    if (add_or_mul == 0) {
-        mkdir("testing/add", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-        test_create("testing/add", deep);
-    } else { 
-        mkdir("testing/mul", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-        test_create("testing/mul", deep);
-    }
+    // rmdir("testing");
+    // mkdir("testing", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    // int flag = 1; // first func call
+    // test_create("testing", deep, &flag);
 
-    DIR* dir = opendir("testing");
-    struct dirent* dirent;
-    while (dirent = readdir(dir)) {
-        if (strcmp(dirent->d_name, ".") != 0 && strcmp(dirent->d_name, "..") != 0) {
-            char path[PATH_MAX + 1] = "testing";
-            strcat(path, "/");  
-            strcat(path, dirent->d_name);
+    // DIR* dir = opendir("testing");
+    // struct dirent* dirent;
+    // while (dirent = readdir(dir)) {
+    //     if (strcmp(dirent->d_name, ".") != 0 && strcmp(dirent->d_name, "..") != 0) {
+    //         char path[PATH_MAX + 1] = "testing";
+    //         strcat(path, "/");  
+    //         strcat(path, dirent->d_name);
 
-            printf("%ld\n", func(path, dirent->d_name));
-            // FILE* result = fopen("result.txt", "w"); 
-            // fprintf(result, "%d\n", func(path, dirent->d_name));
-            // fclose(result);
-	   }
-    }
+    //         printf("%ld\n", func(path, dirent->d_name));
+    //         // FILE* result = fopen("result.txt", "w"); 
+    //         // fprintf(result, "%d\n", func(path, dirent->d_name));
+    //         // fclose(result);
+	   // }
+    // }
     
-    closedir(dir);
-    system("tree ./testing");
+    // closedir(dir);
+    // system("tree ./testing");
+    rmdir("testing");
     return 0;
 }
