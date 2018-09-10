@@ -85,7 +85,12 @@ void MainWindow::on_compress_button_clicked() {
             }
         }
     }
+<<<<<<< HEAD
 //    std::ofstream file(QFileDialog::getSaveFileName(this).toStdString(), std::ios::out | std::ios::binary);
+=======
+  
+  //    std::ofstream file(QFileDialog::getSaveFileName(this).toStdString(), std::ios::out | std::ios::binary);
+>>>>>>> 7e52d74cea27ccfe7648579638c404bb14dc3d6b
 
 //    if (file.is_open()) {
 //        BitMapFileHeader bm_header;
