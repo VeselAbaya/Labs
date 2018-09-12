@@ -1,3 +1,11 @@
+((a*b)+(c-b))
+a
+a+b
+(a
+(a+(a*a))
+(((a*a)-a)+a)
+((a+b)-c
+qwerty
 (a+b)
 (ab)
 

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cctype>
-#include <exception>
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -9,7 +8,7 @@
 #define FIRST_CALL true
 
 using namespace std;
-// (c*(a+b))
+
 bool check_expr_impl(istringstream& istr, bool call = false) {
   bool res;
   char c;
@@ -67,9 +66,9 @@ int main(int argc, char* argv[]) {
     exprs.push_back(expr);
   }
 
-  cout << boolalpha;
+  o_file << boolalpha;
   for (auto& expr: exprs)
-    cout << setw(spacing) << left << expr <<" : " << check_expr(expr) << endl;
+    o_file << setw(spacing) << left << expr <<" : " << check_expr(expr) << endl;
 
   i_file.close();
   o_file.close();
