@@ -45,6 +45,8 @@ bool check_expr_impl(istringstream& istr, bool call = false) {
 }
 
 bool check_expr(string const& expr) {
+  if (expr.size() == 1 && isalpha(expr.at(0)))
+    return true;
   if (expr.empty() || expr.at(0) != '(')
     return false;
 
