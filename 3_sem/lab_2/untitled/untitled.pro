@@ -44,7 +44,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     input.txt \
-    task.html
+    task.html \
+    author.html \
+    help.html
 
 RESOURCES += \
     about.qrc

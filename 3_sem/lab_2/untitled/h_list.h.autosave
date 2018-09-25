@@ -3,7 +3,7 @@
 #include <string>
 
 namespace h_list {
-  typedef string base;
+  typedef std::string base;
   struct s_expr;
   struct two_ptr {
     s_expr * hd;
