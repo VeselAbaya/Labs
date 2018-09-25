@@ -1,0 +1,3 @@
+(abc)
+(a(bc)cd)
+(ab(c((de)(fg))hig)k))

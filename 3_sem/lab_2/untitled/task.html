@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Help dialog</title>
+</head>
+<body>
+  <h1><b>Task</b></h1>
+  <h2>Иерархические списки</h2>
+  <p>В задании требуется написать функцию flatten, которая по атомам иерархического списка создает линейный список</p>
+  <h3>Структура иерархического списка</h3>
+  <code><br>
+    typedef char base; <br>
+    struct s_expr;<br>
+    struct two_ptr {<br>
+      &nbsp;&nbsp;s_expr * hd;<br>
+      &nbsp;&nbsp;s_expr * tl;<br>
+    };<br>
+    struct s_expr {<br>
+      &nbsp;&nbsp;bool tag; // true: atom, false: pair<br>
+      &nbsp;&nbsp;union {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;base atom;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;two_ptr pair;<br>
+      &nbsp;&nbsp;} node; //end union node<br>
+    }; //end s_expr<br>
+<br>
+    typedef s_expr* lisp;<br>
+  </code>
+</body>
+</html>
