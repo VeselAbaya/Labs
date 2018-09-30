@@ -3,15 +3,15 @@
 #include <string>
 
 namespace h_list {
-  typedef string base;
+  typedef std::string base;
   struct s_expr;
   struct two_ptr {
-    s_expr * hd;
-    s_expr * tl;
+    s_expr * hd = nullptr;
+    s_expr * tl = nullptr;
   };
   struct s_expr {
     bool tag; // true: atom, false: pair
-    union {
+    struct {
       base atom;
       two_ptr pair;
     } node; //end union node
@@ -31,7 +31,7 @@ namespace h_list {
   lisp flatten(const lisp s);
 
   void read_lisp(lisp & y, std::istream& in);
-  void read_s_expr(base prev, lisp & y, std::istream& in);
+  void read_s_expr(char prev, lisp & y, std::istream& in);
   void read_seq(lisp & y, std::istream& in);
 
   void write_lisp(const lisp x, std::ostream& out);

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <iostream>
+#include <exception>
+#include <QDebug>
 #include "h_list.h"
 
 using namespace std;
@@ -106,25 +108,28 @@ namespace h_list {
   } //end flatten
 
   void read_lisp(lisp & y, std::istream& in) {
-    base x;
+    char x;
     do {
       in >> x;
     } while (x == ' ');
     read_s_expr(x, y, in);
   } //end read_lisp
 
-  void read_s_expr(base prev, lisp & y, std::istream& in) {
+  void read_s_expr(char prev, lisp & y, std::istream& in) {
     if (prev == ')') {
       cerr << " ! List.Error 1 " << endl;
       exit(1);
-    } else if (prev != '(')
-      y = make_atom(prev);
-    else
+    } else if (prev != '(') {
+      base value = std::string{prev};
+      while (in.peek() != ' ' && in.peek() != '(' && in.peek() != ')')
+          value += in.get();
+      y = make_atom(value);
+    } else
       read_seq(y, in);
   } //end read_s_expr
 
   void read_seq(lisp & y, std::istream& in) {
-    base x;
+    char x;
     lisp p1, p2;
 
     if (!(in >> x)) {

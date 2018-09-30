@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow) {
     ui->setupUi(this);
     setCentralWidget(ui->splitter);
+    list = new h_list::s_expr;
 }
 
 MainWindow::~MainWindow() {
@@ -38,7 +39,7 @@ void MainWindow::on_button_clicked() {
 
     while (input.good()) {
         std::string list_repr;
-        input >> list_repr;
+        std::getline(input, list_repr);
 
         if (list_repr != "") {
             std::istringstream list_repr_stream{list_repr};
