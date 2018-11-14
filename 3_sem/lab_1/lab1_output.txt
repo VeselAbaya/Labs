@@ -1,5 +1,5 @@
 ((a*b)+(c-b))     : true
-a                 : false
+a                 : true
 a+b               : false
 (a                : false
 (a+(a*a))         : true
@@ -16,7 +16,7 @@ abc               : false
 (a*(a+b))         : true
 (a*(a+b)          : false
 ((a+b)*a          : false
-a                 : false
+a                 : true
 ((a-b)*(b*c))+b   : false
 ((a-b)*(b*c)+v)   : false
 (((a-b)*(b*c))+b) : true

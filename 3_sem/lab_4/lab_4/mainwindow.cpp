@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    ui->input->setFontPointSize(16);
+    ui->output->setFontPointSize(16);
     setCentralWidget(ui->splitter);
-    list = new h_list::s_expr;
 }
 
 MainWindow::~MainWindow() {
@@ -31,24 +34,32 @@ void MainWindow::on_actionSave_triggered() {
     std::string output = ui->output->toPlainText().toStdString();
     if (file.good())
         file << output;
+
+    file.close();
 }
 
 void MainWindow::on_button_clicked() {
     input = std::stringstream(ui->input->toPlainText().toStdString());
     output = std::stringstream();
+    ui->output->clear();
 
-    while (input.good()) {
-        std::string list_repr;
-        std::getline(input, list_repr);
-
-        if (list_repr != "") {
-            std::istringstream list_repr_stream{list_repr};
-            h_list::read_lisp(list, list_repr_stream);
-
-            h_list::lisp flatten_list = h_list::flatten(list);
-            h_list::write_lisp(flatten_list, output);
-
-            output << '\n';
+    Tree<char> tree;
+    while(input.good()) {
+        std::string str;
+        input >> str;
+        if (str != "") {
+            if (str[0] == '(') {
+                try {
+                    std::stringstream{str} >> tree;
+                    tree.print_leaves(output);
+                    output << '\n';
+                } catch (std::logic_error& err) {
+                    output << err.what() << '\n';
+                } catch (std::exception& err) {
+                    output << "Something went wrong" << '\n';
+                }
+            } else
+                output << "First bracket is necessary" << '\n';
         }
     }
 

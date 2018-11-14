@@ -30,7 +30,7 @@
     <widget class="QTextEdit" name="output"/>
     <widget class="QPushButton" name="button">
      <property name="text">
-      <string>Flatten</string>
+      <string>Check</string>
      </property>
     </widget>
    </widget>

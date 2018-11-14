@@ -11,7 +11,7 @@ namespace h_list {
     // PreCondition: not null (s)
     if (s != nullptr) {
       if (!isAtom(s))
-        return s->node.pair.hd;
+        return s->node.hd_tl.hd;
       else {
         cerr << "Error: Head(atom) \n";
         exit(1);
@@ -33,7 +33,7 @@ namespace h_list {
     // PreCondition: not null (s)
     if (s != nullptr) {
       if (!isAtom(s))
-        return s->node.pair.tl;
+        return s->node.hd_tl.tl;
       else {
         cerr << "Error: Tail(atom) \n";
         exit(1);
@@ -44,21 +44,21 @@ namespace h_list {
     }
   }
 
-  lisp cons(const lisp & h, const lisp & t) {
+  lisp create(const lisp & h, const lisp & t) {
     // PreCondition: not isAtom (t)
     lisp p;
     if (isAtom(t)) {
       cerr << "Error: Cons(*, atom)\n";
       exit(1);
     } else {
-      p = new s_expr;
+      p = new node;
       if (p == nullptr) {
         cerr << "Memory not enough\n";
         exit(1);
       } else {
         p->tag = false;
-        p->node.pair.hd = h;
-        p->node.pair.tl = t;
+        p->node.hd_tl.hd = h;
+        p->node.hd_tl.tl = t;
         return p;
       }
     }
@@ -66,7 +66,7 @@ namespace h_list {
 
   lisp make_atom(const base x) {
     lisp s;
-    s = new s_expr;
+    s = new node;
     s->tag = true;
     s->node.atom = x;
     return s;
@@ -92,30 +92,30 @@ namespace h_list {
 
   lisp concat(const lisp & y, const lisp & z) {
     if (!y) return copy_lisp(z);
-    else return cons(copy_lisp(head(y)), concat(tail(y), z));
+    else return create(copy_lisp(head(y)), concat(tail(y), z));
   } // end concat
 
   lisp flatten(const lisp s) {
     if (!s) return nullptr;
     else if (isAtom(s))
-      return cons(make_atom(getAtom(s)), nullptr);
+      return create(make_atom(getAtom(s)), nullptr);
     else {
       if (isAtom(head(s)))
-        return cons(make_atom(getAtom(head(s))), flatten(tail(s)));
+        return create(make_atom(getAtom(head(s))), flatten(tail(s)));
       else
         return concat(flatten(head(s)), flatten(tail(s)));
     }
-  } //end flatten
+  }
 
   void read_lisp(lisp & y, std::istream& in) {
     char x;
     do {
       in >> x;
     } while (x == ' ');
-    read_s_expr(x, y, in);
+    read_node(x, y, in);
   } //end read_lisp
 
-  void read_s_expr(char prev, lisp & y, std::istream& in) {
+  void read_node(char prev, lisp & y, std::istream& in) {
     if (prev == ')') {
       cerr << " ! List.Error 1 " << endl;
       exit(1);
@@ -141,9 +141,9 @@ namespace h_list {
       if (x == ')')
         y = nullptr;
       else {
-        read_s_expr(x, p1, in);
+        read_node(x, p1, in);
         read_seq(p2, in);
-        y = cons(p1, p2);
+        y = create(p1, p2);
       }
     }
   } //end read_seq
@@ -173,6 +173,6 @@ namespace h_list {
     else if (isAtom(x))
       return make_atom(x->node.atom);
     else
-      return cons(copy_lisp(head(x)), copy_lisp(tail(x)));
+      return create(copy_lisp(head(x)), copy_lisp(tail(x)));
   } //end copy-lisp
 } // end of namespace h_list

@@ -4,20 +4,20 @@
 
 namespace h_list {
   typedef std::string base;
-  struct s_expr;
+  struct node;
   struct two_ptr {
-    s_expr * hd = nullptr;
-    s_expr * tl = nullptr;
+    node * hd = nullptr;
+    node * tl = nullptr;
   };
-  struct s_expr {
+  struct node {
     bool tag; // true: atom, false: pair
     struct {
       base atom;
-      two_ptr pair;
+      two_ptr hd_tl;
     } node; //end union node
   }; //end s_expr
 
-  typedef s_expr* lisp;
+  typedef node* lisp;
 
   void print_s_expr(lisp s);
   lisp head(const lisp & s);
@@ -31,7 +31,7 @@ namespace h_list {
   lisp flatten(const lisp s);
 
   void read_lisp(lisp & y, std::istream& in);
-  void read_s_expr(char prev, lisp & y, std::istream& in);
+  void read_node(char prev, lisp & y, std::istream& in);
   void read_seq(lisp & y, std::istream& in);
 
   void write_lisp(const lisp x, std::ostream& out);

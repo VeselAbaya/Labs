@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QDebug>
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
@@ -13,44 +13,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
 MainWindow::~MainWindow() {
     delete ui;
-}
-
-size_t check_braces(string input) {
-  Stack<char> stack;
-  size_t len = input.length();
-  size_t i;
-  for (i = 0; i != len; ++i) {
-    switch (input[i]) {
-        case '[':
-        case '{':
-        case '(':
-        stack.push(input[i]);
-      break;
-        case ']':
-          if (!stack.empty() && stack.top()==  '[')
-            stack.pop();
-          else
-            return i + 1;
-        break;
-        case '}':
-            if (!stack.empty() && stack.top() == '{')
-            stack.pop();
-                else
-            return i + 1;
-        break;
-        case ')':
-          if (!stack.empty() && stack.top() == '(')
-            stack.pop();
-          else
-            return i + 1;
-        break;
-    }
-  }
-
-  if (stack.empty())
-    return 0;
-  else
-    return i;
 }
 
 void MainWindow::on_actionOpen_triggered() {
@@ -81,20 +43,18 @@ void MainWindow::on_button_clicked() {
     output = std::stringstream();
     ui->output->clear();
 
-    while (input.good()) {
-        std::string brace_seq;
-        std::getline(input, brace_seq);
-
-//        if (brace_seq != "") {
-            size_t res = check_braces(brace_seq);
-            if (res)
-              output << res;
-            else
-              output << "Success";
-
-            output << '\n';
-//        }
-    }
+    AVL_tree<int> tree;
+    tree.insert(1);
+    tree.insert(12);
+    tree.insert(2);
+    tree.insert(4);
+    tree.insert(2);
+    tree.insert(6);
+    tree.insert(345);
+    tree.output(output);
+    output << std::endl;
+    tree.remove(2);
+    tree.output(output);
 
     ui->output->append(QString(output.str().c_str()));
 }

@@ -9,9 +9,10 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <utility>
 
-#include "h_list.h"
 #include "about.h"
+#include "avl_tree.h"
 
 namespace Ui {
     class MainWindow;
@@ -33,7 +34,6 @@ private slots:
     void on_actionAbout_triggered();
 
 private:
-    h_list::lisp list;
     std::stringstream input;
     std::stringstream output;
     QString input_file;
