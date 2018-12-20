@@ -17,9 +17,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSplitter>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,56 +27,41 @@ public:
     QAction *actionOpen;
     QAction *actionSave;
     QAction *actionAbout;
+    QAction *actionInsert;
     QWidget *centralWidget;
-    QSplitter *splitter;
-    QTextEdit *input;
-    QTextEdit *output;
-    QPushButton *button;
     QMenuBar *menuBar;
-    QMenu *menuFile;
     QMenu *menuHelp;
+    QMenu *menuInsert;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(735, 469);
+        MainWindow->resize(650, 650);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QStringLiteral("actionSave"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QStringLiteral("actionAbout"));
+        actionInsert = new QAction(MainWindow);
+        actionInsert->setObjectName(QStringLiteral("actionInsert"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        splitter = new QSplitter(centralWidget);
-        splitter->setObjectName(QStringLiteral("splitter"));
-        splitter->setGeometry(QRect(10, 0, 721, 441));
-        splitter->setOrientation(Qt::Horizontal);
-        input = new QTextEdit(splitter);
-        input->setObjectName(QStringLiteral("input"));
-        splitter->addWidget(input);
-        output = new QTextEdit(splitter);
-        output->setObjectName(QStringLiteral("output"));
-        splitter->addWidget(output);
-        button = new QPushButton(splitter);
-        button->setObjectName(QStringLiteral("button"));
-        splitter->addWidget(button);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 735, 22));
-        menuFile = new QMenu(menuBar);
-        menuFile->setObjectName(QStringLiteral("menuFile"));
+        menuBar->setGeometry(QRect(0, 0, 650, 22));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
+        menuInsert = new QMenu(menuBar);
+        menuInsert->setObjectName(QStringLiteral("menuInsert"));
         MainWindow->setMenuBar(menuBar);
 
-        menuBar->addAction(menuFile->menuAction());
+        menuBar->addAction(menuInsert->menuAction());
         menuBar->addAction(menuHelp->menuAction());
-        menuFile->addAction(actionOpen);
-        menuFile->addAction(actionSave);
         menuHelp->addAction(actionAbout);
+        menuInsert->addAction(actionInsert);
 
         retranslateUi(MainWindow);
 
@@ -92,9 +74,9 @@ public:
         actionOpen->setText(QApplication::translate("MainWindow", "Open", nullptr));
         actionSave->setText(QApplication::translate("MainWindow", "Save", nullptr));
         actionAbout->setText(QApplication::translate("MainWindow", "About", nullptr));
-        button->setText(QApplication::translate("MainWindow", "Check", nullptr));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", nullptr));
+        actionInsert->setText(QApplication::translate("MainWindow", "Insert", nullptr));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", nullptr));
+        menuInsert->setTitle(QApplication::translate("MainWindow", "Actions", nullptr));
     } // retranslateUi
 
 };

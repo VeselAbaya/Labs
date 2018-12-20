@@ -2,17 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTextEdit>
-#include <QFileDialog>
-#include <QString>
-
-#include <string>
-#include <sstream>
-#include <fstream>
-#include <utility>
 
 #include "about.h"
-#include "avl_tree.h"
+#include "insertdialog.h"
+#include "graphwidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -26,19 +19,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionOpen_triggered();
-    void on_actionSave_triggered();
-
-    void on_button_clicked();
-
     void on_actionAbout_triggered();
 
+    void on_actionInsert_triggered();
+
 private:
-    std::stringstream input;
-    std::stringstream output;
-    QString input_file;
-    QString output_file;
     Ui::MainWindow *ui;
+    GraphWidget* graph;
 };
 
 #endif // MAINWINDOW_H

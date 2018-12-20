@@ -25,16 +25,24 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    about.cpp
+    about.cpp \
+    graphwidget.cpp \
+    node.cpp \
+    edge.cpp \
+    insertdialog.cpp
 
 HEADERS += \
         mainwindow.h \
     about.h \
-    avl_tree.h \
+    graphwidget.h \
+    node.h \
+    edge.h \
+    insertdialog.h
 
 FORMS += \
         mainwindow.ui \
-    about.ui
+    about.ui \
+    insertdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

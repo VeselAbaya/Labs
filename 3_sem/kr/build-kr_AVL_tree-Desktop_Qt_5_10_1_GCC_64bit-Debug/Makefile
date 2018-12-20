@@ -52,15 +52,29 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../kr_AVL_tree/main.cpp \
 		../kr_AVL_tree/mainwindow.cpp \
-		../kr_AVL_tree/about.cpp qrc_about.cpp \
+		../kr_AVL_tree/about.cpp \
+		../kr_AVL_tree/graphwidget.cpp \
+		../kr_AVL_tree/node.cpp \
+		../kr_AVL_tree/edge.cpp \
+		../kr_AVL_tree/insertdialog.cpp qrc_about.cpp \
 		moc_mainwindow.cpp \
-		moc_about.cpp
+		moc_about.cpp \
+		moc_graphwidget.cpp \
+		moc_node.cpp \
+		moc_insertdialog.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		about.o \
+		graphwidget.o \
+		node.o \
+		edge.o \
+		insertdialog.o \
 		qrc_about.o \
 		moc_mainwindow.o \
-		moc_about.o
+		moc_about.o \
+		moc_graphwidget.o \
+		moc_node.o \
+		moc_insertdialog.o
 DIST          = ../kr_AVL_tree/task.html \
 		../kr_AVL_tree/author.html \
 		../kr_AVL_tree/help.html \
@@ -249,9 +263,16 @@ DIST          = ../kr_AVL_tree/task.html \
 		/home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/features/lex.prf \
 		../kr_AVL_tree/kr_AVL_tree.pro ../kr_AVL_tree/mainwindow.h \
 		../kr_AVL_tree/about.h \
-		../kr_AVL_tree/avl_tree.h ../kr_AVL_tree/main.cpp \
+		../kr_AVL_tree/graphwidget.h \
+		../kr_AVL_tree/node.h \
+		../kr_AVL_tree/edge.h \
+		../kr_AVL_tree/insertdialog.h ../kr_AVL_tree/main.cpp \
 		../kr_AVL_tree/mainwindow.cpp \
-		../kr_AVL_tree/about.cpp
+		../kr_AVL_tree/about.cpp \
+		../kr_AVL_tree/graphwidget.cpp \
+		../kr_AVL_tree/node.cpp \
+		../kr_AVL_tree/edge.cpp \
+		../kr_AVL_tree/insertdialog.cpp
 QMAKE_TARGET  = kr_AVL_tree
 DESTDIR       = 
 TARGET        = kr_AVL_tree
@@ -260,7 +281,7 @@ TARGET        = kr_AVL_tree
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_about.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_about.h ui_insertdialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../kr_AVL_tree/kr_AVL_tree.pro /home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/linux-g++/qmake.conf /home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/features/spec_pre.prf \
@@ -656,9 +677,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../kr_AVL_tree/about.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../kr_AVL_tree/mainwindow.h ../kr_AVL_tree/about.h ../kr_AVL_tree/avl_tree.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../kr_AVL_tree/main.cpp ../kr_AVL_tree/mainwindow.cpp ../kr_AVL_tree/about.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../kr_AVL_tree/mainwindow.ui ../kr_AVL_tree/about.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../kr_AVL_tree/mainwindow.h ../kr_AVL_tree/about.h ../kr_AVL_tree/graphwidget.h ../kr_AVL_tree/node.h ../kr_AVL_tree/edge.h ../kr_AVL_tree/insertdialog.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../kr_AVL_tree/main.cpp ../kr_AVL_tree/mainwindow.cpp ../kr_AVL_tree/about.cpp ../kr_AVL_tree/graphwidget.cpp ../kr_AVL_tree/node.cpp ../kr_AVL_tree/edge.cpp ../kr_AVL_tree/insertdialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../kr_AVL_tree/mainwindow.ui ../kr_AVL_tree/about.ui ../kr_AVL_tree/insertdialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -698,9 +719,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_about.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_about.cpp moc_graphwidget.cpp moc_node.cpp moc_insertdialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_about.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_about.cpp moc_graphwidget.cpp moc_node.cpp moc_insertdialog.cpp
 moc_mainwindow.cpp: /home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMainWindow \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -807,24 +828,9 @@ moc_mainwindow.cpp: /home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMainWin
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qicon.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QTextEdit \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtextedit.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextdocument.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextcursor.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextformat.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QFileDialog \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qfiledialog.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdir.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfileinfo.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QString \
 		../kr_AVL_tree/about.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QDialog \
-		../kr_AVL_tree/avl_tree.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
 		../kr_AVL_tree/mainwindow.h \
 		moc_predefs.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc
@@ -939,13 +945,354 @@ moc_about.cpp: /home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QDialog \
 		/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc
 	/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/veselabaya/studying/programming/labs/3_sem/kr/kr_AVL_tree -I/home/veselabaya/Qt/5.10.1/gcc_64/include -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../kr_AVL_tree/about.h -o moc_about.cpp
 
+moc_graphwidget.cpp: /home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsView \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainter.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qbrush.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfont.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpalette.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcursor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMenu \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmenu.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qicon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qaction.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		../kr_AVL_tree/node.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsItem \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QList \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QPointF \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug \
+		../kr_AVL_tree/edge.h \
+		../kr_AVL_tree/graphwidget.h \
+		moc_predefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc
+	/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/veselabaya/studying/programming/labs/3_sem/kr/kr_AVL_tree -I/home/veselabaya/Qt/5.10.1/gcc_64/include -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../kr_AVL_tree/graphwidget.h -o moc_graphwidget.cpp
+
+moc_node.cpp: /home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsItem \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QList \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QPointF \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug \
+		../kr_AVL_tree/node.h \
+		moc_predefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc
+	/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/veselabaya/studying/programming/labs/3_sem/kr/kr_AVL_tree -I/home/veselabaya/Qt/5.10.1/gcc_64/include -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../kr_AVL_tree/node.h -o moc_node.cpp
+
+moc_insertdialog.cpp: /home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QDialog \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpalette.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qbrush.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfont.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcursor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		../kr_AVL_tree/insertdialog.h \
+		moc_predefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc
+	/home/veselabaya/Qt/5.10.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/veselabaya/Qt/5.10.1/gcc_64/mkspecs/linux-g++ -I/home/veselabaya/studying/programming/labs/3_sem/kr/kr_AVL_tree -I/home/veselabaya/Qt/5.10.1/gcc_64/include -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui -I/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../kr_AVL_tree/insertdialog.h -o moc_insertdialog.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_about.h
+compiler_uic_make_all: ui_mainwindow.h ui_about.h ui_insertdialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_about.h
+	-$(DEL_FILE) ui_mainwindow.h ui_about.h ui_insertdialog.h
 ui_mainwindow.h: ../kr_AVL_tree/mainwindow.ui \
 		/home/veselabaya/Qt/5.10.1/gcc_64/bin/uic
 	/home/veselabaya/Qt/5.10.1/gcc_64/bin/uic ../kr_AVL_tree/mainwindow.ui -o ui_mainwindow.h
@@ -953,6 +1300,10 @@ ui_mainwindow.h: ../kr_AVL_tree/mainwindow.ui \
 ui_about.h: ../kr_AVL_tree/about.ui \
 		/home/veselabaya/Qt/5.10.1/gcc_64/bin/uic
 	/home/veselabaya/Qt/5.10.1/gcc_64/bin/uic ../kr_AVL_tree/about.ui -o ui_about.h
+
+ui_insertdialog.h: ../kr_AVL_tree/insertdialog.ui \
+		/home/veselabaya/Qt/5.10.1/gcc_64/bin/uic
+	/home/veselabaya/Qt/5.10.1/gcc_64/bin/uic ../kr_AVL_tree/insertdialog.ui -o ui_insertdialog.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1071,31 +1422,37 @@ main.o: ../kr_AVL_tree/main.cpp ../kr_AVL_tree/mainwindow.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qicon.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QTextEdit \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtextedit.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextdocument.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextcursor.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextformat.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QFileDialog \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qfiledialog.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdir.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfileinfo.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QString \
 		../kr_AVL_tree/about.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QDialog \
-		../kr_AVL_tree/avl_tree.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QApplication \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qapplication.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreapplication.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qeventloop.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qguiapplication.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qinputmethod.h
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qinputmethod.h \
+		../kr_AVL_tree/graphwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsView \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainter.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMenu \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmenu.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qaction.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		../kr_AVL_tree/node.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsItem \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QList \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QPointF \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug \
+		../kr_AVL_tree/edge.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../kr_AVL_tree/main.cpp
 
 mainwindow.o: ../kr_AVL_tree/mainwindow.cpp ../kr_AVL_tree/mainwindow.h \
@@ -1205,24 +1562,9 @@ mainwindow.o: ../kr_AVL_tree/mainwindow.cpp ../kr_AVL_tree/mainwindow.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qicon.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QTextEdit \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtextedit.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextdocument.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextcursor.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextformat.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QFileDialog \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qfiledialog.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdir.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfileinfo.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QString \
 		../kr_AVL_tree/about.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QDialog \
-		../kr_AVL_tree/avl_tree.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
 		ui_mainwindow.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QVariant \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QAction \
@@ -1240,6 +1582,8 @@ mainwindow.o: ../kr_AVL_tree/mainwindow.cpp ../kr_AVL_tree/mainwindow.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QHeaderView \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qheaderview.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qabstractitemmodel.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qitemselectionmodel.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -1256,11 +1600,6 @@ mainwindow.o: ../kr_AVL_tree/mainwindow.cpp ../kr_AVL_tree/mainwindow.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmenu.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMenuBar \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmenubar.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QPushButton \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractbutton.h \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QSplitter \
-		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qsplitter.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QWidget \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../kr_AVL_tree/mainwindow.cpp
@@ -1424,6 +1763,497 @@ about.o: ../kr_AVL_tree/about.cpp ../kr_AVL_tree/about.h \
 		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o about.o ../kr_AVL_tree/about.cpp
 
+graphwidget.o: ../kr_AVL_tree/graphwidget.cpp ../kr_AVL_tree/graphwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsView \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainter.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qbrush.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfont.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpalette.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcursor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMenu \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmenu.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qicon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qaction.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		../kr_AVL_tree/node.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsItem \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QList \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QPointF \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug \
+		../kr_AVL_tree/edge.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QKeyEvent \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QRandomGenerator \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrandom.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphwidget.o ../kr_AVL_tree/graphwidget.cpp
+
+node.o: ../kr_AVL_tree/node.cpp ../kr_AVL_tree/edge.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsItem \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		../kr_AVL_tree/node.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QList \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QPointF \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug \
+		../kr_AVL_tree/graphwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsView \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainter.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qbrush.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfont.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qframe.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpalette.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcursor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QMenu \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qmenu.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qicon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qaction.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsScene \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsSceneMouseEvent \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicssceneevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QPainter \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QStyleOption \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvalidator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregularexpression.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qslider.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qstyle.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qabstractitemmodel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o node.o ../kr_AVL_tree/node.cpp
+
+edge.o: ../kr_AVL_tree/edge.cpp ../kr_AVL_tree/edge.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QGraphicsItem \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		../kr_AVL_tree/node.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QList \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QPointF \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/QDebug \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/QPainter \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainter.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtextoption.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpen.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qbrush.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfont.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontmetrics.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o edge.o ../kr_AVL_tree/edge.cpp
+
+insertdialog.o: ../kr_AVL_tree/insertdialog.cpp ../kr_AVL_tree/insertdialog.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/QDialog \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qdialog.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobal.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qconfig.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtcore-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsysinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlogging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qflags.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmutex.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnumeric.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qversiontagging.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtgui-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qwidget.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qnamespace.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstring.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qchar.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrefcount.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qarraydata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringliteral.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringview.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qalgorithms.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiterator.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpair.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringlist.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qregexp.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcoreevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmetatype.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qobject_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmargins.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qrect.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsize.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qpoint.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpalette.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcolor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgb.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qrgba64.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qbrush.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvector.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qmatrix.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpolygon.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qregion.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdatastream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qiodevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qline.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtransform.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpainterpath.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qimage.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixelformat.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qpixmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qshareddata.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qhash.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfont.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qfontinfo.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qcursor.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qkeysequence.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qevent.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qvariant.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qmap.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qdebug.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qtextstream.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qlocale.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qset.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurl.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qurlquery.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfile.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtCore/qfiledevice.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qvector2d.h \
+		/home/veselabaya/Qt/5.10.1/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_insertdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o insertdialog.o ../kr_AVL_tree/insertdialog.cpp
+
 qrc_about.o: qrc_about.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_about.o qrc_about.cpp
 
@@ -1432,6 +2262,15 @@ moc_mainwindow.o: moc_mainwindow.cpp
 
 moc_about.o: moc_about.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_about.o moc_about.cpp
+
+moc_graphwidget.o: moc_graphwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_graphwidget.o moc_graphwidget.cpp
+
+moc_node.o: moc_node.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_node.o moc_node.cpp
+
+moc_insertdialog.o: moc_insertdialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_insertdialog.o moc_insertdialog.cpp
 
 ####### Install
 
